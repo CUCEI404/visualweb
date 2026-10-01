@@ -58,9 +58,23 @@
                 <section id="sorting-benchmark" style="padding: 4em 0; background: #f9f9f9;">
                     <div class="container">
                         <header style="text-align: center; margin-bottom: 2em;">
-                            <h2>Comparativa en vivo: <strong>Bubble Sort vs Selection Sort</strong></h2>
-                            <p>Mide los tiempos de ejecución en JavaScript según la cantidad de elementos aleatorios.</p>
+                            <h2>Comparativa en vivo: <strong>Algoritmos de Ordenamiento</strong></h2>
+                            <p>Selecciona los algoritmos que quieres comparar y presiona "Ejecutar Pruebas".</p>
                         </header>
+                <div style="max-width: 300px; margin: 0 auto 1.5em auto;">
+    <select id="algoSelect">
+        <option value="">-- Selecciona un algoritmo --</option>
+        <option value="bubble">Bubble Sort</option>
+        <option value="selection">Selection Sort</option>
+        <option value="insertion">Insertion Sort</option>
+        <option value="gnome">Gnome Sort</option>
+        <option value="exchange">Exchange Sort</option>
+        <option value="stooge">Stooge Sort</option>
+        <option value="merge">Merge Sort</option>
+        <option value="quick">Quick Sort</option>
+    </select>
+</div>
+                <div id="algoSelector" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5em 1.5em; margin-bottom: 1.5em;"></div>
 
                         <div class="row aln-center">
                             <div class="col-8 col-12-medium">
