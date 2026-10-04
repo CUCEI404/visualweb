@@ -1,0 +1,202 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Visualizador - Animación</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/main.css" />
+        <style>
+            .bar {
+                transition: height 0.1s ease, background-color 0.1s ease; 
+            }
+        </style>
+    </head>
+    <body class="no-sidebar is-preload">
+        <div id="page-wrapper">
+
+            <!-- Header -->
+                <section id="header">
+                    <div class="container">
+                        <h1 id="logo"><a href="index.html">Visualizador Web</a></h1>
+                        <p>Análisis de Algoritmos - Proyecto Integrador</p>
+
+                        <!-- Nav -->
+                            <nav id="nav">
+                                <ul>
+                                    <li><a class="icon solid fa-home" href="index.html"><span>Inicio</span></a></li>
+                                    <li>
+                                        <a href="#" class="icon fa-chart-bar"><span>Algoritmos O(n²)</span></a>
+                                        <ul>
+                                            <li><a href="#">Bubble Sort</a></li>
+                                            <li><a href="#">Selection Sort</a></li>
+                                            <li><a href="animacion.html?algo=insertion">Insertion Sort</a></li>
+                                            <li><a href="animacion.html?algo=gnome">Gnome Sort</a></li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="icon fa-layer-group"><span>Algoritmos O(n log n)</span></a>
+                                        <ul>
+                                            <li><a href="#">Merge Sort</a></li>
+                                            <li><a href="#">Quick Sort</a></li>
+                                            <li><a href="#">Heap Sort</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </nav>
+                    </div>
+                </section>
+
+            <!-- Main Content -->
+                <section id="main">
+                    <div class="container">
+                        <div id="content">
+                                <article class="box post">
+                                    <header style="text-align: center; margin-bottom: 2em;">
+                                        <!-- Títulos dinámicos controlados por JavaScript -->
+                                        <h2 id="animTitle"><strong>Cargando Algoritmo...</strong></h2>
+                                        <p id="animDesc">Preparando visualización</p>
+                                    </header>
+                                    
+                                    <div id="visualizer" style="display: flex; align-items: flex-end; justify-content: center; height: 350px; gap: 4px; background: #f9f9f9; padding: 1em; border-radius: 8px; border: 1px solid #ddd;">
+                                        <!-- Las barras se generarán aquí -->
+                                    </div>
+
+                                    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1em; margin-top: 2em;">
+                                        <button id="animBtn" class="button">Ejecutar Algoritmo</button>
+                                        <button id="resetAnimBtn" class="button alt icon solid fa-sync">Generar Nuevos Datos</button>
+                                    </div>
+                                </article>
+                        </div>
+                    </div>
+                </section>
+        </div>
+
+        <!-- Scripts -->
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/jquery.dropotron.min.js"></script>
+        <script src="assets/js/browser.min.js"></script>
+        <script src="assets/js/breakpoints.min.js"></script>
+        <script src="assets/js/util.js"></script>
+        <script src="assets/js/main.js"></script>
+
+        <!-- LÓGICA DEL VISUALIZADOR DINÁMICO -->
+        <script>
+            let animSpeed = 80; 
+            const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+            let currentAnimArray = [];
+
+            function drawArray(arr) {
+                const container = document.getElementById("visualizer");
+                container.innerHTML = ''; 
+                arr.forEach(value => {
+                    const bar = document.createElement("div");
+                    bar.classList.add("bar");
+                    bar.style.height = `${value}px`;
+                    bar.style.width = "30px";
+                    bar.style.backgroundColor = "#41b3a3"; 
+                    container.appendChild(bar);
+                });
+            }
+
+            function resetVisualizerData() {
+                currentAnimArray = Array.from({ length: 25 }, () => Math.floor(Math.random() * 300) + 20);
+                drawArray(currentAnimArray);
+            }
+
+            async function animatedInsertionSort(arr) {
+                let bars = document.getElementById("visualizer").children;
+                let localArr = [...arr]; 
+                
+                for (let i = 1; i < localArr.length; i++) {
+                    let clave = localArr[i];
+                    let j = i - 1;
+                    bars[i].style.backgroundColor = "#ed5050"; 
+                    await sleep(animSpeed); 
+
+                    while (j >= 0 && localArr[j] > clave) {
+                        bars[j].style.backgroundColor = "#eebb4d"; 
+                        localArr[j + 1] = localArr[j];
+                        bars[j + 1].style.height = `${localArr[j + 1]}px`; 
+                        await sleep(animSpeed); 
+                        bars[j].style.backgroundColor = "#41b3a3"; 
+                        j -= 1;
+                    }
+                    localArr[j + 1] = clave;
+                    bars[j + 1].style.height = `${clave}px`;
+                    bars[i].style.backgroundColor = "#41b3a3";
+                }
+            }
+
+            async function animatedGnomeSort(arr) {
+                let bars = document.getElementById("visualizer").children;
+                let localArr = [...arr];
+                let i = 0;
+                let n = localArr.length;
+                
+                while (i < n) {
+                    bars[i].style.backgroundColor = "#ed5050"; 
+                    await sleep(animSpeed);
+                    
+                    if (i === 0 || localArr[i] >= localArr[i - 1]) {
+                        bars[i].style.backgroundColor = "#41b3a3";
+                        i += 1;
+                    } else {
+                        bars[i - 1].style.backgroundColor = "#eebb4d"; 
+                        let temp = localArr[i];
+                        localArr[i] = localArr[i - 1];
+                        localArr[i - 1] = temp;
+                        bars[i].style.height = `${localArr[i]}px`;
+                        bars[i - 1].style.height = `${localArr[i - 1]}px`;
+                        await sleep(animSpeed);
+                        bars[i].style.backgroundColor = "#41b3a3";
+                        bars[i - 1].style.backgroundColor = "#41b3a3";
+                        i -= 1;
+                    }
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", () => {
+                resetVisualizerData(); 
+
+                // Leer el parámetro de la URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const algo = urlParams.get('algo') || 'insertion';
+
+                const animTitle = document.getElementById('animTitle');
+                const animDesc = document.getElementById('animDesc');
+                const animBtn = document.getElementById('animBtn');
+                const resetAnimBtn = document.getElementById('resetAnimBtn');
+
+                // Configurar la interfaz según el algoritmo elegido
+                if (algo === 'gnome') {
+                    animTitle.innerHTML = "<strong>Gnome Sort</strong>";
+                    animDesc.innerText = "Observa cómo se intercambian los elementos retrocediendo cuando es necesario.";
+                    animBtn.innerText = "Ejecutar Gnome Sort";
+                } else {
+                    animTitle.innerHTML = "<strong>Insertion Sort</strong>";
+                    animDesc.innerText = "Observa cómo cada elemento encuentra su posición correcta en la parte ya ordenada.";
+                    animBtn.innerText = "Ejecutar Insertion Sort";
+                }
+
+                // Asignar el evento al botón dinámico
+                animBtn.addEventListener('click', async () => {
+                    animBtn.disabled = true;
+                    resetAnimBtn.disabled = true;
+
+                    if (algo === 'gnome') {
+                        await animatedGnomeSort(currentAnimArray);
+                    } else {
+                        await animatedInsertionSort(currentAnimArray);
+                    }
+
+                    animBtn.disabled = false;
+                    resetAnimBtn.disabled = false;
+                });
+
+                resetAnimBtn.addEventListener('click', () => {
+                    resetVisualizerData();
+                });
+            });
+        </script>
+    </body>
+</html>
