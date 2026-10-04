@@ -481,6 +481,45 @@
                 return arr;
             }
 
+            function merge_sort(lista) {
+                let arr = [...lista];
+                if (arr.length <= 1) {
+                return arr;
+          }
+
+                 let mid = Math.floor(arr.length / 2);
+                 let izq = merge_sort(arr.slice(0, mid));
+                 let der = merge_sort(arr.slice(mid));
+
+                 return merge(izq, der);
+            }
+
+function merge(izq, der) {
+    let resultado = [];
+    let i = 0, j = 0;
+
+    while (i < izq.length && j < der.length) {
+        if (izq[i] <= der[j]) {
+            resultado.push(izq[i]);
+            i++;
+        } else {
+            resultado.push(der[j]);
+            j++;
+        }
+    }
+
+    while (i < izq.length) {
+        resultado.push(izq[i]);
+        i++;
+    }
+    while (j < der.length) {
+        resultado.push(der[j]);
+        j++;
+    }
+
+    return resultado;
+}
+
             function generateRandomArray(size) {
                 return Array.from({ length: size }, () => Math.floor(Math.random() * 10000));
             }
@@ -535,6 +574,14 @@
                                 backgroundColor: 'rgba(123, 94, 167, 0.2)',
                                 fill: true,
                                 tension: 0.3
+                            },
+                            {
+                                label: 'Merge Sort (ms)',
+                                data: [],
+                                borderColor: '#5c940d',
+                                backgroundColor: 'rgba(92, 148, 13, 0.2)',
+                                fill: true,
+                                tension: 0.3
                             }
                         ]
                     },
@@ -561,7 +608,7 @@
                     const selectionTimes = [];
                     const exchangeTimes = [];
                     const stoogeTimes = [];
-
+                    const mergeTimes = [];
                     for (let size of sizes) {
                         await new Promise(resolve => setTimeout(resolve, 40));
                         const randomData = generateRandomArray(size);
@@ -569,13 +616,15 @@
                         bubbleTimes.push(measureTime(bubbleSort, randomData));
                         selectionTimes.push(measureTime(selectionSort, randomData));
                         exchangeTimes.push(measureTime(exchange_sort, randomData));
-                        stoogeTimes.push(measureTime(stooge_sort, randomData));
+                        stoogeTimes.push(size <= 1000 ? measureTime(stooge_sort, randomData) : null);
+                        mergeTimes.push(measureTime(merge_sort, randomData));
                     }
 
                     chart.data.datasets[0].data = bubbleTimes;
                     chart.data.datasets[1].data = selectionTimes;
                     chart.data.datasets[2].data = exchangeTimes;
                     chart.data.datasets[3].data = stoogeTimes;
+                    chart.data.datasets[4].data = mergeTimes;
                     chart.update();
 
                     statusText.innerText = "¡Prueba completada!";
