@@ -1,211 +1,312 @@
 <!DOCTYPE HTML>
 <!--
-    Strongly Typed by HTML5 UP
-    html5up.net | @ajlkn
-    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+	Strongly Typed by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-    <head>
-        <title>Strongly Typed by HTML5 UP - Sorting Benchmark</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <!-- Librería Chart.js para dibujar la gráfica -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
-    <body class="homepage is-preload">
-        <div id="page-wrapper">
+	<head>
+		<title>Strongly Typed by HTML5 UP - Sorting Benchmark</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!-- Librería Chart.js para dibujar la gráfica -->
+		<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	</head>
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
 
-            <!-- Header -->
-                <section id="header">
-                    <div class="container">
+			<!-- Header -->
+				<section id="header">
+					<div class="container">
 
-                        <!-- Logo -->
-                            <h1 id="logo"><a href="index.html">Strongly Typed</a></h1>
-                            <p>A responsive HTML5 site template. Manufactured by HTML5 UP.</p>
+						<!-- Logo -->
+							<h1 id="logo"><a href="index.html">Strongly Typed</a></h1>
+							<p>A responsive HTML5 site template. Manufactured by HTML5 UP.</p>
 
-                        <!-- Nav -->
-                            <nav id="nav">
-                                <ul>
-                                    <li><a class="icon solid fa-home" href="index.html"><span>Inicio</span></a></li>
-                                    <li>
-                                        <a href="#" class="icon fa-chart-bar"><span>Algoritmos O(n²)</span></a>
-                                        <ul>
-                                            <li><a href="#">Bubble Sort</a></li>
-                                            <li><a href="#">Selection Sort</a></li>
-                                            <li><a href="#">Insertion Sort</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="icon fa-layer-group"><span>Algoritmos O(n log n)</span></a>
-                                        <ul>
-                                            <li><a href="#">Merge Sort</a></li>
-                                            <li><a href="#">Quick Sort</a></li>
-                                            <li><a href="#">Heap Sort</a></li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="icon fa-list-ol"><span>Otros Algoritmos</span></a>
-                                        <ul>
-                                            <li><a href="#">Radix Sort</a></li>
-                                            <li><a href="#">Counting Sort</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </nav>
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li><a class="icon solid fa-home" href="index.html"><span>Principal</span></a></li>
+									<li>
+										<a href="animacion.html" class="icon fa-chart-bar"><span>Animacion</span></a>
+									</li>
+								</ul>
+							</nav>
 
-                    </div>
-                </section>
+					</div>
+				</section>
 
-            <!-- Benchmark Section -->
-                <section id="sorting-benchmark" style="padding: 4em 0; background: #f9f9f9;">
-                    <div class="container">
-                        <header style="text-align: center; margin-bottom: 2em;">
-                            <h2>Comparativa en vivo: <strong>Bubble Sort vs Selection Sort</strong></h2>
-                            <p>Mide los tiempos de ejecución en JavaScript según la cantidad de elementos aleatorios.</p>
-                        </header>
+			<!-- Benchmark Section -->
+				<section id="sorting-benchmark" style="padding: 4em 0; background: #f9f9f9;">
+					<div class="container">
+						<header style="text-align: center; margin-bottom: 2em;">
+							<h2>Comparativa en vivo: <strong>Algoritmos de Ordenamiento</strong></h2>
+							<p>Selecciona los algoritmos que quieres comparar y presiona "Ejecutar Pruebas".</p>
+						</header>
+						<div style="max-width: 300px; margin: 0 auto 1.5em auto;">
+							<select id="algoSelect">
+								<option value="">-- Selecciona un algoritmo --</option>
+								<option value="bubble">Bubble Sort</option>
+								<option value="selection">Selection Sort</option>
+								<option value="insertion">Insertion Sort</option>
+								<option value="gnome">Gnome Sort</option>
+								<option value="exchange">Exchange Sort</option>
+								<option value="stooge">Stooge Sort</option>
+								<option value="merge">Merge Sort</option>
+								<option value="quick">Quick Sort</option>
+							</select>
+						</div>
+						<div id="algoSelector" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5em 1.5em; margin-bottom: 1.5em;"></div>
 
-                        <div class="row aln-center">
-                            <div class="col-8 col-12-medium">
-                                <div style="background: #fff; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                                    <canvas id="sortChart" width="400" height="220"></canvas>
-                                </div>
-                            </div>
-                            <div class="col-4 col-12-medium" style="display: flex; flex-direction: column; justify-content: center; gap: 1em;">
-                                <button id="runBtn" class="button icon solid fa-play" style="width: 100%;">Ejecutar Pruebas</button>
-                                <div id="statusText" style="text-align: center; font-weight: bold; color: #555;">
-                                    Presiona el botón para iniciar.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+						<div class="row aln-center">
+							<div class="col-8 col-12-medium">
+								<div style="background: #fff; padding: 1.5em; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+									<canvas id="sortChart" width="400" height="220"></canvas>
+								</div>
+							</div>
+							<div class="col-4 col-12-medium" style="display: flex; flex-direction: column; justify-content: center; gap: 1em;">
+								<button id="runBtn" class="button icon solid fa-play" style="width: 100%;">Ejecutar Pruebas</button>
+								<div id="statusText" style="text-align: center; font-weight: bold; color: #555;">
+									Presiona el botón para iniciar.
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
 
-        </div>
+		</div>
 
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.dropotron.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 
-        <!-- Script integrado para Bubble Sort, Selection Sort y Grafica Chart.js -->
-        <script>
-            function bubbleSort(arr) {
-                let a = [...arr];
-                let len = a.length;
-                for (let i = 0; i < len; i++) {
-                    for (let j = 0; j < len - i - 1; j++) {
-                        if (a[j] > a[j + 1]) {
-                            let temp = a[j];
-                            a[j] = a[j + 1];
-                            a[j + 1] = temp;
-                        }
-                    }
-                }
-                return a;
-            }
+		<!-- Script integrado para Bubble Sort, Selection Sort y Grafica Chart.js -->
+		<script>
+			function bubbleSort(arr) {
+				let a = [...arr];
+				let len = a.length;
+				for (let i = 0; i < len; i++) {
+					for (let j = 0; j < len - i - 1; j++) {
+						if (a[j] > a[j + 1]) {
+							let temp = a[j];
+							a[j] = a[j + 1];
+							a[j + 1] = temp;
+						}
+					}
+				}
+				return a;
+			}
 
-            function selectionSort(arr) {
-                let a = [...arr];
-                let len = a.length;
-                for (let i = 0; i < len; i++) {
-                    let min = i;
-                    for (let j = i + 1; j < len; j++) {
-                        if (a[j] < a[min]) {
-                            min = j;
-                        }
-                    }
-                    if (min !== i) {
-                        let temp = a[i];
-                        a[i] = a[min];
-                        a[min] = temp;
-                    }
-                }
-                return a;
-            }
+			function selectionSort(arr) {
+				let a = [...arr];
+				let len = a.length;
+				for (let i = 0; i < len; i++) {
+					let min = i;
+					for (let j = i + 1; j < len; j++) {
+						if (a[j] < a[min]) {
+							min = j;
+						}
+					}
+					if (min !== i) {
+						let temp = a[i];
+						a[i] = a[min];
+						a[min] = temp;
+					}
+				}
+				return a;
+			}
 
-            function generateRandomArray(size) {
-                return Array.from({ length: size }, () => Math.floor(Math.random() * 10000));
-            }
+			function exchange_sort(lista) {
+				let arr = [...lista];
+				let n = arr.length;
+				for (let i = 0; i < n - 1; i++) {
+					for (let j = i + 1; j < n; j++) {
+						if (arr[j] < arr[i]) {
+							[arr[i], arr[j]] = [arr[j], arr[i]];
+						}
+					}
+				}
+				return arr;
+			}
 
-            function measureTime(sortFn, array) {
-                const start = performance.now();
-                sortFn(array);
-                const end = performance.now();
-                return +(end - start).toFixed(2);
-            }
+			function stooge_sort_rec(arr, l, h) {
+				if (l >= h) {
+					return;
+				}
 
-            document.addEventListener("DOMContentLoaded", () => {
-                const ctx = document.getElementById("sortChart").getContext("2d");
-                const runBtn = document.getElementById("runBtn");
-                const statusText = document.getElementById("statusText");
+				if (arr[l] > arr[h]) {
+					[arr[l], arr[h]] = [arr[h], arr[l]];
+				}
 
-                const sizes = [1000, 3000, 5000, 8000, 10000];
+				if (h - l + 1 > 2) {
+					let t = Math.floor((h - l + 1) / 3);
+					stooge_sort_rec(arr, l, h - t);
+					stooge_sort_rec(arr, l + t, h);
+					stooge_sort_rec(arr, l, h - t);
+				}
+			}
 
-                const chart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: sizes.map(s => `${s} elem`),
-                        datasets: [
-                            {
-                                label: 'Bubble Sort (ms)',
-                                data: [],
-                                borderColor: '#ed5050',
-                                backgroundColor: 'rgba(237, 80, 80, 0.2)',
-                                fill: true,
-                                tension: 0.3
-                            },
-                            {
-                                label: 'Selection Sort (ms)',
-                                data: [],
-                                borderColor: '#41b3a3',
-                                backgroundColor: 'rgba(65, 179, 163, 0.2)',
-                                fill: true,
-                                tension: 0.3
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Rendimiento de Algoritmos O(n^2)'
-                            }
-                        },
-                        scales: {
-                            x: { title: { display: true, text: 'Cantidad de Elementos' } },
-                            y: { title: { display: true, text: 'Tiempo (ms)' }, beginAtZero: true }
-                        }
-                    }
-                });
+			function stooge_sort(lista) {
+				let arr = [...lista];
+				stooge_sort_rec(arr, 0, arr.length - 1);
+				return arr;
+			}
 
-                runBtn.addEventListener('click', async () => {
-                    runBtn.disabled = true;
-                    statusText.innerText = "Calculando tiempos...";
+			function merge_sort(lista) {
+				let arr = [...lista];
+				if (arr.length <= 1) {
+					return arr;
+				}
 
-                    const bubbleTimes = [];
-                    const selectionTimes = [];
+				let mid = Math.floor(arr.length / 2);
+				let izq = merge_sort(arr.slice(0, mid));
+				let der = merge_sort(arr.slice(mid));
 
-                    for (let size of sizes) {
-                        await new Promise(resolve => setTimeout(resolve, 40));
-                        const randomData = generateRandomArray(size);
+				return merge(izq, der);
+			}
 
-                        bubbleTimes.push(measureTime(bubbleSort, randomData));
-                        selectionTimes.push(measureTime(selectionSort, randomData));
-                    }
+			function merge(izq, der) {
+				let resultado = [];
+				let i = 0, j = 0;
 
-                    chart.data.datasets[0].data = bubbleTimes;
-                    chart.data.datasets[1].data = selectionTimes;
-                    chart.update();
+				while (i < izq.length && j < der.length) {
+					if (izq[i] <= der[j]) {
+						resultado.push(izq[i]);
+						i++;
+					} else {
+						resultado.push(der[j]);
+						j++;
+					}
+				}
 
-                    statusText.innerText = "¡Prueba completada!";
-                    runBtn.disabled = false;
-                });
-            });
-        </script>
-    </body>
+				while (i < izq.length) {
+					resultado.push(izq[i]);
+					i++;
+				}
+				while (j < der.length) {
+					resultado.push(der[j]);
+					j++;
+				}
+
+				return resultado;
+			}
+
+			function generateRandomArray(size) {
+				return Array.from({ length: size }, () => Math.floor(Math.random() * 10000));
+			}
+
+			function measureTime(sortFn, array) {
+				const start = performance.now();
+				sortFn(array);
+				const end = performance.now();
+				return +(end - start).toFixed(2);
+			}
+
+			document.addEventListener("DOMContentLoaded", () => {
+				const ctx = document.getElementById("sortChart").getContext("2d");
+				const runBtn = document.getElementById("runBtn");
+				const statusText = document.getElementById("statusText");
+
+				const sizes = [500, 1000, 3000, 5000, 8000, 10000];
+
+				const chart = new Chart(ctx, {
+					type: 'line',
+					data: {
+						labels: sizes.map(s => `${s} elem`),
+						datasets: [
+							{
+								label: 'Bubble Sort (ms)',
+								data: [],
+								borderColor: '#ed5050',
+								backgroundColor: 'rgba(237, 80, 80, 0.2)',
+								fill: true,
+								tension: 0.3
+							},
+							{
+								label: 'Selection Sort (ms)',
+								data: [],
+								borderColor: '#41b3a3',
+								backgroundColor: 'rgba(65, 179, 163, 0.2)',
+								fill: true,
+								tension: 0.3
+							},
+							{
+								label: 'Exchange Sort (ms)',
+								data: [],
+								borderColor: '#f2a541',
+								backgroundColor: 'rgba(242, 165, 65, 0.2)',
+								fill: true,
+								tension: 0.3
+							},
+							{
+								label: 'Stooge Sort (ms)',
+								data: [],
+								borderColor: '#7b5ea7',
+								backgroundColor: 'rgba(123, 94, 167, 0.2)',
+								fill: true,
+								tension: 0.3
+							},
+							{
+								label: 'Merge Sort (ms)',
+								data: [],
+								borderColor: '#5c940d',
+								backgroundColor: 'rgba(92, 148, 13, 0.2)',
+								fill: true,
+								tension: 0.3
+							}
+						]
+					},
+					options: {
+						responsive: true,
+						plugins: {
+							title: {
+								display: true,
+								text: 'Rendimiento de Algoritmos O(n^2)'
+							}
+						},
+						scales: {
+							x: { title: { display: true, text: 'Cantidad de Elementos' } },
+							y: { title: { display: true, text: 'Tiempo (ms)' }, beginAtZero: true }
+						}
+					}
+				});
+
+				runBtn.addEventListener('click', async () => {
+					runBtn.disabled = true;
+					statusText.innerText = "Calculando tiempos...";
+
+					const bubbleTimes = [];
+					const selectionTimes = [];
+					const exchangeTimes = [];
+					const stoogeTimes = [];
+					const mergeTimes = [];
+					for (let size of sizes) {
+						await new Promise(resolve => setTimeout(resolve, 40));
+						const randomData = generateRandomArray(size);
+
+						bubbleTimes.push(measureTime(bubbleSort, randomData));
+						selectionTimes.push(measureTime(selectionSort, randomData));
+						exchangeTimes.push(measureTime(exchange_sort, randomData));
+						stoogeTimes.push(size <= 1000 ? measureTime(stooge_sort, randomData) : null);
+						mergeTimes.push(measureTime(merge_sort, randomData));
+					}
+
+					chart.data.datasets[0].data = bubbleTimes;
+					chart.data.datasets[1].data = selectionTimes;
+					chart.data.datasets[2].data = exchangeTimes;
+					chart.data.datasets[3].data = stoogeTimes;
+					chart.data.datasets[4].data = mergeTimes;
+					chart.update();
+
+					statusText.innerText = "¡Prueba completada!";
+					runBtn.disabled = false;
+				});
+			});
+		</script>
+	</body>
 </html>
